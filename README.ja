@@ -1,0 +1,61 @@
+BonCasServer perl版
+
+◇なにこれ
+スマートカードリーダ共有システムBonCasLink( http://2sen.dip.jp/dtv/files/BonCasLink/Readme.txt )の
+サーバソフトBonCasServerをperl(libpcsc-perl)で書き直してみました。
+BonCasLinkの使い方は適当にぐぐってください。
+
+◇つかいかた
+Debian/GNU Linux lennyとsqueezeで使ってます。aptでlibpcsc-perl pcscd pcsc-tools libpcsclite1あたりを
+入れる必要があるでしょう。他のdistは使ったこと無いので分かりません。適当にぐぐって下さい。
+
+pcsc_scanでB-CAS認識して「Japanese Chijou Digital B-CAS Card (pay TV)」が出る事を前提としています。
+Debianだとaptitude search pcscで出てくるパッケージを適当にinstallすれば入ります。pcsc_scanしないなら
+pcsc-toolsは要らないはず。
+
+lennyのデフォルトだと/usr/share/pcsc/smartcard_list.txtが古くて未知のカードとか言われるようです。
+未知と叫ぶと同時にwget http://ludovic.rousseau.free.fr/softwares/pcsc-tools/smartcard_list.txtしろと
+出ますので、仰るとおりに更新すればカードが認識されるはず。
+squeezeだと特に問題なくB-CASと認識しました。BCASのATRが変わった場合、適当に書き直してください。
+
+で、設定。bcs-perl.plには
+・カードリーダの指定($selected_reader)
+・待機するポート($listen_port)
+・バインドするIP($bind_addr)
+三つの設定項目があります。
+
+カードリーダは
+$ ./bcs-perl.pl list
+>>List of PC/SC card reader
+SCM SCR 3310 NTTCom 00 00
+>>EOL
+$ 
+
+実行すると、pcscdが認識しているカードリーダ一覧が出てくるので、その文字列を指定します。
+前述の文字列は、NTT-ME SCR3310-NTTCom(http://www.amazon.co.jp/dp/B00117VJ7O)の文字列です。
+マシンによってこれが変わる可能性もあります。変わってたら$selected_readerを変更してください。
+
+待機するポートは6900から変える必要はおそらく無いでしょう。bindするIPも変えなくてもいい気がします。
+
+で、ちゃんと設定出来ると
+$ ./bcs-perl.pl
+>>Reader:SCM SCR 3310 NTTCom 00 00
+>>Card Status:[Card Present][Powered][Ready for PTS]
+>>Card ID: xx-xx-xx-xx-xx-xx
+>>Begin Listening(0.0.0.0:6900).....
+という表示が出来て接続待ちになります。
+
+ネットワーク上の何処かでBonCasProxyが動いて繋ぎに来ると
+>>Connected from 192.168.100.2:6900
+とか出ます。接続が終了すると
+>>Disconnected from 192.168.100.2:6900
+みたいに出ます。
+
+◇ライセンス
+MIT License
+このコード使って動かなくてもBonCasLink作者様に質問しないでください。
+問題が起きた際に自分で解決できない人は使うべきではありません。
+
+◇作者
+walkure at kmc.gr.jp
+
