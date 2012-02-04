@@ -6,7 +6,7 @@ This is an abridged document for non-Japanese user.
 *What's this?
 perl implementation of BonCasServer.
 
-BonCasServer is a server tool for BonCasLink(SmartCart shareing over TCP/IP).
+BonCasServer is a server tool for BonCasLink(SmartCard shareing over TCP/IP).
 cf. http://2sen.dip.jp/dtv/files/BonCasLink/ (may written only in Japanese language)
 
 *Requirement
