@@ -1,0 +1,27 @@
+bcs-perl(perl implementation of BonCasServer)
+===
+This is an abridged document for non-Japanese user.
+
+
+*What's this?
+perl implementation of BonCasServer.
+
+BonCasServer is a server tool for BonCasLink(SmartCart shareing over TCP/IP).
+cf. http://2sen.dip.jp/dtv/files/BonCasLink/ (may written only in Japanese language)
+
+*Requirement
+- libpcsc-perl(Perl interface to the PC/SC smart card library) and dependencies.
+
+*Configure
+This code assume to use the reader "NTT-ME SCR3310-NTTCom"(id string is "SCM SCR 3310 NTTCom 00 00").
+If bcs-perl cannot find pcsc card reader when you start it,please check about it.
+
+*License
+MIT License
+
+*Author
+walkure at kmc.gr.jp
+
+*Caution
+The author of BonCasLink has no relation with this product :)
+
