@@ -69,7 +69,7 @@ my %hosts;
 
 while(1){
 
-	#Timeout 1secs
+	#Timeout undefined(infinite)
 	my ($active_socks) = IO::Select->select($sel,undef,undef,undef);
 	
 	#check if card is ejected
