@@ -13,7 +13,7 @@ cf. http://2sen.dip.jp/dtv/files/BonCasLink/ (may written only in Japanese langu
 - libpcsc-perl(Perl interface to the PC/SC smart card library) and dependencies.
 
 *Configure
-This code assume to use the reader "NTT-ME SCR3310-NTTCom"(id string is "SCM SCR 3310 NTTCom 00 00").
+This code assume to use the reader "NTT-ME SCR3310-NTTCom"(id string is "SCM SCR 3310 NTTCom [Vendor Interface] (21120651345180) 00 00").
 If bcs-perl cannot find pcsc card reader when you start it,please check about it.
 
 *License
