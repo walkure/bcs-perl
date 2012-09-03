@@ -1,61 +1,61 @@
-BonCasServer perl��
+BonCasServer perl版
 
-���ʤˤ���
-���ޡ��ȥ����ɥ꡼����ͭ�����ƥ�BonCasLink( http://2sen.dip.jp/dtv/files/BonCasLink/Readme.txt )��
-�����Х��ե�BonCasServer��perl(libpcsc-perl)�ǽ�ľ���Ƥߤޤ�����
-BonCasLink�λȤ�����Ŭ���ˤ����äƤ���������
+◇なにこれ
+スマートカードリーダ共有システムBonCasLink( http://2sen.dip.jp/dtv/files/BonCasLink/Readme.txt )の
+サーバソフトBonCasServerをperl(libpcsc-perl)で書き直してみました。
+BonCasLinkの使い方は適当にぐぐってください。
 
-���Ĥ�������
-Debian/GNU Linux lenny��squeeze�ǻȤäƤޤ���apt��libpcsc-perl pcscd pcsc-tools libpcsclite1�������
-�����ɬ�פ�����Ǥ��礦��¾��dist�ϻȤä�����̵���Τ�ʬ����ޤ���Ŭ���ˤ����äƲ�������
+◇つかいかた
+Debian/GNU Linux lennyとsqueezeで使ってます。aptでlibpcsc-perl pcscd pcsc-tools libpcsclite1あたりを
+入れる必要があるでしょう。他のdistは使ったこと無いので分かりません。適当にぐぐって下さい。
 
-pcsc_scan��B-CASǧ�����ơ�Japanese Chijou Digital B-CAS Card (pay TV)�פ��Ф��������Ȥ��Ƥ��ޤ���
-Debian����aptitude search pcsc�ǽФƤ���ѥå�������Ŭ����install���������ޤ���pcsc_scan���ʤ��ʤ�
-pcsc-tools���פ�ʤ��Ϥ���
+pcsc_scanでB-CAS認識して「Japanese Chijou Digital B-CAS Card (pay TV)」が出る事を前提としています。
+Debianだとaptitude search pcscで出てくるパッケージを適当にinstallすれば入ります。pcsc_scanしないなら
+pcsc-toolsは要らないはず。
 
-lenny�Υǥե���Ȥ���/usr/share/pcsc/smartcard_list.txt���Ť���̤�ΤΥ����ɤȤ�������褦�Ǥ���
-̤�Τȶ��֤�Ʊ����wget http://ludovic.rousseau.free.fr/softwares/pcsc-tools/smartcard_list.txt������
-�Фޤ��Τǡ��Ĥ�Ȥ���˹�������Х����ɤ�ǧ�������Ϥ���
-squeeze�����ä�����ʤ�B-CAS��ǧ�����ޤ�����BCAS��ATR���Ѥ�ä���硢Ŭ���˽�ľ���Ƥ���������
+lennyのデフォルトだと/usr/share/pcsc/smartcard_list.txtが古くて未知のカードとか言われるようです。
+未知と叫ぶと同時にwget http://ludovic.rousseau.free.fr/softwares/pcsc-tools/smartcard_list.txtしろと
+出ますので、仰るとおりに更新すればカードが認識されるはず。
+squeezeだと特に問題なくB-CASと認識しました。BCASのATRが変わった場合、適当に書き直してください。
 
-�ǡ����ꡣbcs-perl.pl�ˤ�
-�������ɥ꡼���λ���($selected_reader)
-���Ե�����ݡ���($listen_port)
-���Х���ɤ���IP($bind_addr)
-���Ĥ�������ܤ�����ޤ���
+で、設定。bcs-perl.plには
+・カードリーダの指定($selected_reader)
+・待機するポート($listen_port)
+・バインドするIP($bind_addr)
+三つの設定項目があります。
 
-�����ɥ꡼����
+カードリーダは
 $ ./bcs-perl.pl list
 >>List of PC/SC card reader
 SCM SCR 3310 NTTCom 00 00
 >>EOL
 $ 
 
-�¹Ԥ���ȡ�pcscd��ǧ�����Ƥ��륫���ɥ꡼���������ФƤ���Τǡ�����ʸ�������ꤷ�ޤ���
-���Ҥ�ʸ����ϡ�NTT-ME SCR3310-NTTCom(http://www.amazon.co.jp/dp/B00117VJ7O)��ʸ����Ǥ���
-�ޥ���ˤ�äƤ��줬�Ѥ���ǽ���⤢��ޤ����Ѥ�äƤ���$selected_reader���ѹ����Ƥ���������
+実行すると、pcscdが認識しているカードリーダ一覧が出てくるので、その文字列を指定します。
+前述の文字列は、NTT-ME SCR3310-NTTCom(http://www.amazon.co.jp/dp/B00117VJ7O)の文字列です。
+マシンによってこれが変わる可能性もあります。変わってたら$selected_readerを変更してください。
 
-�Ե�����ݡ��Ȥ�6900�����Ѥ���ɬ�פϤ����餯̵���Ǥ��礦��bind����IP���Ѥ��ʤ��Ƥ⤤���������ޤ���
+待機するポートは6900から変える必要はおそらく無いでしょう。bindするIPも変えなくてもいい気がします。
 
-�ǡ����������������
+で、ちゃんと設定出来ると
 $ ./bcs-perl.pl
 >>Reader:SCM SCR 3310 NTTCom 00 00
 >>Card Status:[Card Present][Powered][Ready for PTS]
 >>Card ID: xx-xx-xx-xx-xx-xx
 >>Begin Listening(0.0.0.0:6900).....
-�Ȥ���ɽ�����������³�Ԥ��ˤʤ�ޤ���
+という表示が出来て接続待ちになります。
 
-�ͥåȥ����β��褫��BonCasProxy��ư���ƷҤ�������
+ネットワーク上の何処かでBonCasProxyが動いて繋ぎに来ると
 >>Connected from 192.168.100.2:6900
-�Ȥ��Фޤ�����³����λ�����
+とか出ます。接続が終了すると
 >>Disconnected from 192.168.100.2:6900
-�ߤ����˽Фޤ���
+みたいに出ます。
 
-���饤����
+◇ライセンス
 MIT License
-���Υ����ɻȤä�ư���ʤ��Ƥ�BonCasLink����ͤ˼��䤷�ʤ��Ǥ���������
-���꤬�������ݤ˼�ʬ�ǲ��Ǥ��ʤ��ͤϻȤ��٤��ǤϤ���ޤ���
+このコード使って動かなくてもBonCasLink作者様に質問しないでください。
+問題が起きた際に自分で解決できない人は使うべきではありません。
 
-�����
-walkure at kmc.gr.jp
+◇作者
+walkure at 3pf.jp
 
