@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# BonCasServer(perl version) by walkure at kmc.gr.jp
+# BonCasServer(perl version) by walkure at 3pf.jp
 # 02 Dec 2009 first release.
 # 03 Dec 2009 re-open card when card is re-entered , show B-CAS style card uID
 
